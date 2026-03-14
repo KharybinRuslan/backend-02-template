@@ -1,51 +1,39 @@
-const http = require('http');
-const { getUsers } = require('./modules/users');
+require('dotenv').config();
 
-const PORT = process.env.PORT || 3003;
-const HOST = '127.0.0.1';
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
-const server = http.createServer((request, response) => {
-  const url = new URL(request.url, `http://${HOST}:${PORT}`);
-  const params = url.searchParams;
+const routes = require('./routes');
+const logger = require('./middlewares/logger');
+const notFound = require('./middlewares/notFound');
+const errorHandler = require('./middlewares/errorHandler');
 
-  const hasHello = params.has('hello');
-  const hasUsers = params.has('users');
-  const paramCount = params.size;
+const app = express();
+const PORT = process.env.PORT || 3005;
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/librarydb';
 
-  if (hasHello && paramCount === 1) {
-    const name = params.get('hello');
-    if (!name || name.trim() === '') {
-      response.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
-      response.end('Enter a name');
-      return;
-    }
-    response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-    response.end(`Hello, ${name}.`);
-    return;
+app.use(express.json());
+
+app.use(cors({
+  origin: (origin, callback) => {
+    const allowed = !origin || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+    callback(null, allowed);
   }
+}));
 
-  if (hasUsers && paramCount === 1) {
-    try {
-      const users = getUsers();
-      response.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-      response.end(JSON.stringify(users));
-    } catch (err) {
-      response.writeHead(500);
-      response.end();
-    }
-    return;
-  }
+app.use(logger);
+app.use(routes);
+app.use(notFound);
+app.use(errorHandler);
 
-  if (paramCount === 0) {
-    response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-    response.end('Hello, World!');
-    return;
-  }
-
-  response.writeHead(500);
-  response.end();
-});
-
-server.listen(PORT, HOST, () => {
-  console.log(`Server is running at http://${HOST}:${PORT}`);
-});
+mongoose.connect(MONGO_URL)
+  .then(() => {
+    app.listen(PORT, '127.0.0.1', () => {
+      console.log(`Server started at http://127.0.0.1:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
