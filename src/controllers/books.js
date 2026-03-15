@@ -19,6 +19,15 @@ async function getBooks(req, res, next) {
   }
 }
 
+async function createBook(req, res, next) {
+  try {
+    const book = await Book.create(req.body);
+    res.status(201).json(book);
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function getBookById(req, res, next) {
   try {
     const book = await Book.findById(req.params.id);
@@ -67,6 +76,7 @@ async function deleteBookById(req, res, next) {
 module.exports = {
   getBooks,
   getBookById,
+  createBook,
   updateBookById,
   deleteBookById,
 };

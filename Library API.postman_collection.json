@@ -455,18 +455,13 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:3005/users/69b50e9c1868b7d9a890954c",
-          "protocol": "http",
+          "raw": "{{api_url}}/users/{{user_id}}",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "{{api_url}}"
           ],
-          "port": "3005",
           "path": [
             "users",
-            "69b50e9c1868b7d9a890954c"
+            "{{user_id}}"
           ]
         }
       },
@@ -487,18 +482,13 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:3005/books/69b50e9c1868b7d9a8909550",
-          "protocol": "http",
+          "raw": "{{api_url}}/books/{{book_id}}",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "{{api_url}}"
           ],
-          "port": "3005",
           "path": [
             "books",
-            "69b50e9c1868b7d9a8909550"
+            "{{book_id}}"
           ]
         }
       },
@@ -510,18 +500,13 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:3005/users/69b50e9c1868b7d9a890954c",
-          "protocol": "http",
+          "raw": "{{api_url}}/users/{{user_id}}",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "{{api_url}}"
           ],
-          "port": "3005",
           "path": [
             "users",
-            "69b50e9c1868b7d9a890954c"
+            "{{user_id}}"
           ]
         }
       },
@@ -533,18 +518,13 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:3005/books/69b50e9c1868b7d9a8909550",
-          "protocol": "http",
+          "raw": "{{api_url}}/books/{{book_id}}",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "{{api_url}}"
           ],
-          "port": "3005",
           "path": [
             "books",
-            "69b50e9c1868b7d9a8909550"
+            "{{book_id}}"
           ]
         }
       },
@@ -556,18 +536,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:3005/users/69b50e9c1868b7d9a890954c",
-          "protocol": "http",
+          "raw": "{{api_url}}/users/{{user_id}}",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "{{api_url}}"
           ],
-          "port": "3005",
           "path": [
             "users",
-            "69b50e9c1868b7d9a890954c"
+            "{{user_id}}"
           ]
         }
       },
@@ -579,22 +554,58 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:3005/books/69b50e9c1868b7d9a8909550",
-          "protocol": "http",
+          "raw": "{{api_url}}/books/{{book_id}}",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "{{api_url}}"
           ],
-          "port": "3005",
           "path": [
             "books",
-            "69b50e9c1868b7d9a8909550"
+            "{{book_id}}"
           ]
         }
       },
       "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "api_url",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "book_id",
+      "value": "",
+      "type": "default"
     }
   ]
 }

@@ -19,6 +19,15 @@ async function getUsers(req, res, next) {
   }
 }
 
+async function createUser(req, res, next) {
+  try {
+    const user = await User.create(req.body);
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function getUserById(req, res, next) {
   try {
     const user = await User.findById(req.params.id);
@@ -67,6 +76,7 @@ async function deleteUserById(req, res, next) {
 module.exports = {
   getUsers,
   getUserById,
+  createUser,
   updateUserById,
   deleteUserById,
 };
